@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <link rel="stylesheet" type="text/css" href="css.css" media="screen">
+      <title>Country Code Generator</title>
+        <script
+              src="https://code.jquery.com/jquery-3.2.1.min.js"
+              integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+              crossorigin="anonymous">
+        </script>
+
+        <script type="text/javascript">
+            
+            var countries;
+
+            function populate(){
+                var s1 = document.getElementById("slct1");
+
+                var selectedCountry = countries.filter(function(country) {
+                  return country.name ===  s1.value;
+                });
+
+                if(selectedCountry[0] !== undefined)
+                    alert("Country Code is  " +'+' + selectedCountry[0].callingCodes[0]);
+ 
+                else
+                    alert('Invalid country');
+            }
+
+            $(document).ready(function() {
+                    $.getJSON("https://restcountries.eu/rest/v2/all", function(json){
+                            countries = json;
+                            $.each(countries, function(i, country) {
+                            $('#slct1').append($('<option>').text(country.name).attr('value', country.name));
+                        });
+                    });
+                }        
+            );
+            
+        </script>
+    </head>
+    <body>
+    <br><br><br><br><br><br><br><br><br>
+        <table align="center" border="1">
+        <tr>
+        <td>
+        <h2 style="color: black;background-color: #bf8040">Select Country</h2>
+        <hr />
+        <label for="slct1" style="color: blue;background-color: yellow">Choose Country:</label>
+        <select id="slct1" name="slct1"></select>    
+        <button onclick="populate()">  Find</button>
+        <br>
+        
+        <hr />
+        </td>
+        </tr>
+        </table>
+    </body>
+</html>  
